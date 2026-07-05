@@ -1,0 +1,14 @@
+# Configuracion de Yazi. El esquema usa [mgr] (Yazi >= 25.5).
+# Los iconos vienen de la Nerd Font del terminal + iconos internos de Yazi;
+# el aspecto lo da el flavor Tokyo Night (ver theme.toml).
+
+[mgr]
+show_hidden = false       # alternar en caliente con la tecla . (punto)
+sort_by = "natural"       # orden natural (file2 antes que file10)
+sort_dir_first = true     # carpetas primero
+linemode = "size"         # muestra el tamaño a la derecha de cada entrada
+show_symlink = true
+
+[preview]
+max_width = 1000
+max_height = 1000

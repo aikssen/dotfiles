@@ -1,0 +1,15 @@
+# Plugins de zsh gestionados por antidote (lista declarativa, repetible).
+# Se cargan SOLO fuera de Warp (ver ~/.zshrc): Warp ya trae autosuggest/highlight
+# nativos y estos plugins ZLE chocarian con su editor de linea.
+
+# Mas completions
+zsh-users/zsh-completions
+
+# Sugerencias estilo fish (texto gris segun historial)
+zsh-users/zsh-autosuggestions
+
+# Resaltado de sintaxis (version rapida y mantenida)
+zdharma-continuum/fast-syntax-highlighting
+
+# Buscar en el historial con las flechas segun lo ya escrito
+zsh-users/zsh-history-substring-search
