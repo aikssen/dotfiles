@@ -9,6 +9,7 @@ brew "ffmpeg"      # previews de video/audio en yazi
 brew "fzf"         # fuzzy finder
 brew "gh"          # GitHub CLI
 brew "git"
+brew "herdr"       # multiplexor de terminal para agentes de IA (config en herdr/)
 brew "imagemagick" # previews de imagen (SVG/HEIC/fuentes) en yazi
 brew "jq"          # previews de JSON en yazi
 brew "lazygit"     # TUI de git (integrado en nvim: <leader>gg)
