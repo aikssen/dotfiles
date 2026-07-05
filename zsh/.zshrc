@@ -3,6 +3,11 @@
 
 export HOMEBREW_NO_AUTO_UPDATE=1
 
+# Raiz del repo dotfiles, derivada del propio symlink de este archivo.
+# Funciona sin importar donde se haya clonado (~/dotfiles, ~/Documents/DEV/dotfiles, etc.).
+# %x = archivo que se esta sourceando (~/.zshrc, symlink) | :A resuelve el symlink | :h:h sube dos niveles
+export DOTFILES="${${(%):-%x}:A:h:h}"
+
 # ----------------------------------------------------------------------------
 # PATH
 # ----------------------------------------------------------------------------
@@ -68,7 +73,7 @@ else
 fi
 
 # Guardar/actualizar estos dotfiles en un solo comando
-alias dotsave='git -C ~/dotfiles add -A && git -C ~/dotfiles commit -m "update dotfiles" && git -C ~/dotfiles push'
+alias dotsave='git -C "$DOTFILES" add -A && git -C "$DOTFILES" commit -m "update dotfiles" && git -C "$DOTFILES" push'
 
 # Yazi: 'y' abre el explorador y al salir (q) deja la shell en el directorio elegido
 if command -v yazi >/dev/null 2>&1; then
