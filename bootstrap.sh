@@ -158,6 +158,13 @@ install_eza_linux() {  # eza no siempre esta en repos viejos; fallback a GitHub
     | tar -xz -C "$HOME/.local/bin" ./eza 2>/dev/null || warn "eza fallo (instalalo manual)"
 }
 
+install_herdr_linux() {  # multiplexor para agentes de IA (binario de GitHub, sin sudo)
+  command -v herdr >/dev/null 2>&1 && return 0
+  log "Instalando herdr..."
+  curl -fsSL "https://github.com/ogulcancelik/herdr/releases/latest/download/herdr-linux-${NU_ARCH}" \
+    -o "$HOME/.local/bin/herdr" && chmod +x "$HOME/.local/bin/herdr" || warn "herdr fallo"
+}
+
 install_antidote_linux() {  # gestor de plugins de zsh (no esta en dnf/apt)
   [ -d "$HOME/.antidote" ] && { log "antidote ya presente."; return 0; }
   log "Instalando antidote..."
@@ -219,6 +226,7 @@ bootstrap_linux() {
   install_gh_linux
   install_yazi_linux
   install_yazi_deps_linux
+  install_herdr_linux
   ensure_zsh_default
   [ "$PROFILE" = "desktop" ] && install_nerd_fonts_linux || log "Perfil server: omito fuentes (las provee el terminal cliente por SSH)."
 }
@@ -253,9 +261,9 @@ link_dotfiles() {
   command -v stow >/dev/null 2>&1 || { warn "stow no esta instalado; no puedo enlazar."; return 1; }
 
   local pkg
-  for pkg in nvim starship mise git zsh yazi; do backup_stow_pkg "$pkg" "$HOME"; done
+  for pkg in nvim starship mise git zsh yazi herdr; do backup_stow_pkg "$pkg" "$HOME"; done
   cd "$DOTFILES"
-  stow -t "$HOME" nvim starship mise git zsh yazi
+  stow -t "$HOME" nvim starship mise git zsh yazi herdr
 
   # nushell vive en sitios distintos segun el SO
   local nu_target
