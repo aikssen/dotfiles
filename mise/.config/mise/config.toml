@@ -1,0 +1,8 @@
+[tools]
+go = "1.26"
+node = "26"
+"pipx:ansible-core" = "latest"
+pnpm = "latest"
+python = "latest"
+rust = "latest"
+terraform = "latest"

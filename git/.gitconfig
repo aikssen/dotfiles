@@ -1,0 +1,14 @@
+[init]
+	defaultBranch = main
+[alias]
+	s = status
+	c = checkout
+[user]
+	name = Ever Cifuentes
+	# Email noreply de GitHub: enlaza los commits a la cuenta sin exponer
+	# el correo real. Para usar otro email/config por maquina, ver el include.
+	email = 1864698+aikssen@users.noreply.github.com
+[include]
+	# Config local NO versionada (email real, claves de firma, etc.).
+	# Git ignora este include si el archivo no existe.
+	path = ~/.gitconfig.local

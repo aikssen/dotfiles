@@ -1,0 +1,12 @@
+# macOS
+.DS_Store
+
+# Editores
+*.swp
+*~
+
+# nushell — datos de sesion, no configuracion
+nushell/nushell/history.txt
+
+# Backups creados por bootstrap.sh al resolver conflictos de stow
+*.bak.*

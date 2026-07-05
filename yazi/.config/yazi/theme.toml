@@ -1,0 +1,6 @@
+# Tema de Yazi — usa el flavor Tokyo Night (vendorizado en flavors/), alineado
+# con Neovim y starship. El theme.toml del usuario siempre tiene prioridad sobre
+# el flavor, asi que aqui se puede sobreescribir cualquier color puntual.
+[flavor]
+dark = "tokyo-night"
+light = "tokyo-night"
