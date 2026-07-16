@@ -119,9 +119,10 @@ El script es **idempotente** (puedes correrlo varias veces sin romper nada) y ha
 1. Instala las **Xcode Command Line Tools** si faltan.
 2. Instala **Homebrew** si falta.
 3. `brew bundle` → instala todas las apps y las **Nerd Fonts** del `Brewfile`.
-4. Respalda cualquier dotfile real en conflicto a `*.bak.<fecha>`.
-5. **Enlaza** todas las configuraciones con `stow`.
-6. Pre-instala los plugins de **Neovim** (`:Lazy sync` en modo headless).
+4. **CLIs de agentes de IA** (instaladores oficiales → `~/.local/bin`): `codex`, `agy`.
+5. Respalda cualquier dotfile real en conflicto a `*.bak.<fecha>`.
+6. **Enlaza** todas las configuraciones con `stow`.
+7. Pre-instala los plugins de **Neovim** (`:Lazy sync` en modo headless).
 
 ### Paso 3 — Configurar la fuente del terminal (manual) 🔤
 
@@ -170,10 +171,13 @@ Qué hace en Linux:
 3. **Instaladores oficiales user-local** (sin sudo, → `~/.local/bin`):
    `starship`, `zoxide`, `mise`, `uv`.
 4. **Binarios de GitHub releases**: `lazygit`, `nushell`.
-5. En Ubuntu, donde `fd` se llama `fdfind`, crea el symlink `~/.local/bin/fd`.
-6. **Runtimes con mise** (`node`, `go`, `python`, `rust`, `pnpm`) — node es necesario
+5. **CLIs de agentes de IA** (instaladores oficiales, sin sudo y sin node →
+   `~/.local/bin`): `codex` (OpenAI) y `agy` (Antigravity de Google). Se
+   autoactualizan solos; son los mismos instaladores que en el Mac.
+6. En Ubuntu, donde `fd` se llama `fdfind`, crea el symlink `~/.local/bin/fd`.
+7. **Runtimes con mise** (`node`, `go`, `python`, `rust`, `pnpm`) — node es necesario
    para los LSP de Neovim (Mason).
-7. **Fuentes**: solo en perfil *desktop* (Fedora). En servidores se omiten.
+8. **Fuentes**: solo en perfil *desktop* (Fedora). En servidores se omiten.
 
 ### Perfil desktop vs server
 
