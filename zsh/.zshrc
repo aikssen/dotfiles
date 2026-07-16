@@ -72,6 +72,8 @@ else
   alias la='ls -A'
 fi
 
+alias ff='fastfetch'
+
 # Guardar/actualizar estos dotfiles en un solo comando
 alias dotsave='git -C "$DOTFILES" add -A && git -C "$DOTFILES" commit -m "update dotfiles" && git -C "$DOTFILES" push'
 
