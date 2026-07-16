@@ -251,6 +251,16 @@ install_codex() {  # Codex CLI de OpenAI (agente de codigo en la terminal)
 
 install_antigravity() {  # Antigravity CLI de Google (el comando es 'agy')
   command -v agy >/dev/null 2>&1 && return 0
+  # El binario de agy viene compilado exigiendo PCLMULQDQ y aborta al arrancar
+  # (SIGILL) si la CPU no lo expone. Eso pasa en las VMs: el modelo de CPU por
+  # defecto de hlab (x86-64-v2-AES) da AES pero NO pclmulqdq, igual que
+  # x86-64-v3 — hay que pasar a un modelo con nombre (EPYC) o a host. Verificado
+  # en vivo. Instalarlo igual solo dejaria un binario roto, asi que comprobamos
+  # antes; en cuanto la CPU lo exponga, esto se activa solo.
+  if [ "$PLATFORM" = "Linux" ] && ! grep -qw pclmulqdq /proc/cpuinfo 2>/dev/null; then
+    warn "agy: omitido — esta CPU no expone pclmulqdq y el binario aborta (cambia el modelo de CPU de la VM, p.ej. EPYC)"
+    return 0
+  fi
   log "Instalando Antigravity CLI (agy)..."
   # El instalador oficial descarga y verifica el binario (sha512), pero al final
   # ejecuta 'agy install', que apenda un PATH ABSOLUTO a ~/.zshrc y ~/.zprofile
