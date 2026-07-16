@@ -232,6 +232,49 @@ bootstrap_linux() {
 }
 
 # ============================================================================
+# CLIs de agentes de IA (comun a macOS y Linux)
+# ============================================================================
+# Instaladores oficiales -> ~/.local/bin, sin sudo y sin node (binarios
+# autocontenidos). A proposito NO van por brew/npm: los casks son solo macOS y
+# van por detras de la version oficial, y el instalador de codex trata una
+# instalacion de brew/npm como un conflicto que hay que desinstalar. Ambos CLIs
+# se autoactualizan solos, asi que aqui no hay logica de upgrade.
+
+install_codex() {  # Codex CLI de OpenAI (agente de codigo en la terminal)
+  command -v codex >/dev/null 2>&1 && return 0
+  log "Instalando Codex CLI..."
+  # CODEX_NON_INTERACTIVE=1 -> sin prompts (headless por SSH/ansible). Instala en
+  # ~/.local/bin y, como ya esta en el PATH (arriba), detecta que no necesita
+  # tocar ningun perfil de shell.
+  curl -fsSL https://chatgpt.com/codex/install.sh | CODEX_NON_INTERACTIVE=1 sh || warn "codex fallo"
+}
+
+install_antigravity() {  # Antigravity CLI de Google (el comando es 'agy')
+  command -v agy >/dev/null 2>&1 && return 0
+  log "Instalando Antigravity CLI (agy)..."
+  # El instalador oficial descarga y verifica el binario (sha512), pero al final
+  # ejecuta 'agy install', que apenda un PATH ABSOLUTO a ~/.zshrc y ~/.zprofile
+  # sin preguntar. Aqui esos dos archivos son symlinks de stow a este repo, asi
+  # que eso ensucia los dotfiles versionados con la ruta de una sola maquina.
+  # Por eso corremos el instalador con un HOME temporal que absorbe esa escritura
+  # y movemos solo el binario (es autocontenido y corre desde cualquier ruta).
+  # El PATH ya lo pone .zprofile/.zshrc de forma portable ($HOME/.local/bin).
+  local tmp; tmp="$(mktemp -d "$HOME/.agy-install.XXXXXX")"
+  if HOME="$tmp" bash -c 'curl -fsSL https://antigravity.google/cli/install.sh | bash' >/dev/null 2>&1 \
+     && [ -x "$tmp/.local/bin/agy" ]; then
+    mv -f "$tmp/.local/bin/agy" "$HOME/.local/bin/agy"
+  else
+    warn "antigravity fallo"
+  fi
+  rm -rf "$tmp"
+}
+
+install_ai_clis() {
+  install_codex
+  install_antigravity
+}
+
+# ============================================================================
 # Enlazado de configuraciones (comun)
 # ============================================================================
 backup_if_real() {
@@ -296,6 +339,7 @@ case "$PLATFORM" in
   *) warn "Plataforma no soportada: $PLATFORM"; exit 1 ;;
 esac
 
+install_ai_clis   # codex + agy: mismos instaladores oficiales en macOS y Linux
 link_dotfiles
 post_install
 
